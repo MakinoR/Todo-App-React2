@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./styles.css";
 
 export const App = () => {
+  // 分割代入でわかりやすく！！
   const [todoText, setTodoText] = useState("");
   // useStateの第２引数は、第一引数のstateを更新していく関数を記述する
   const [incompleteTodos, setIncompleteTodos] = useState([
