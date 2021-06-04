@@ -19,8 +19,11 @@ export const App = () => {
   const onChangeTodoText = (e) => {
     setTodoText(e.target.value);
   };
-  const onClickDelete = () => {
-    console.log("makino");
+  const onClickDelete = (index) => {
+    const newTodos = [...incompleteTodos];
+    newTodos.splice(index, 1);
+    setIncompleteTodos(newTodos);
+    // console.log(index);
   };
   const onClickAdd = () => {
     if (todoText === "") return;
