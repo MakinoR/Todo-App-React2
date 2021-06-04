@@ -6,6 +6,7 @@ export const App = () => {
   // 分割代入でわかりやすく！！
   const [todoText, setTodoText] = useState("");
   // useStateの第２引数は、第一引数のstateを更新していく関数を記述する
+  //useStateの中身は第一引数の初期値になるよーん
   const [incompleteTodos, setIncompleteTodos] = useState([
     "ああああああ",
     "いいいいいいい"
@@ -15,9 +16,18 @@ export const App = () => {
     "いいいいいいい"
   ]);
 
-  const onChangeTodoText = (e) => setTodoText(e.target.value);
+  const onChangeTodoText = (e) => {
+    setTodoText(e.target.value);
+  };
+  const onClickDelete = () => {
+    console.log("makino");
+  };
   const onClickAdd = () => {
-    alert(todoText);
+    if (todoText === "") return;
+    const newTodos = [...incompleteTodos, todoText];
+    setIncompleteTodos(newTodos);
+    setTodoText("");
+    // alert(todoText);
   };
   return (
     <>
@@ -34,14 +44,15 @@ export const App = () => {
       <div className="incomplete-area">
         <p className="title">未完のリスト</p>
         <ul>
-          {incompleteTodos.map((todo) => {
+          {incompleteTodos.map((todo, index) => {
             return (
               //ループ内で目印をつける。mapとかで繰り替え処理するときに必須？？
               <li key={todo}>
                 <div className="list-row">
                   <p>{todo}</p>
                   <button>Complete</button>
-                  <button>Delete</button>
+                  <button onClick={() => onClickDelete(index)}>Delete</button>
+                  {/* イベントハンドラに引数を入れたいときはアロー関数にしないと勝手に実行されるよーん */}
                 </div>
               </li>
             );
