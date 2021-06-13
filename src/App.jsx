@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import "./styles.css";
 import { InputTodo } from "./components/inputTodo";
+import { IncompleteTodos } from "./components/incompleteTodos";
+import { CompleteTodos } from "./components/CompleteTodos";
 
 export const App = () => {
   // 分割代入でわかりやすく！！
@@ -17,9 +19,18 @@ export const App = () => {
     // "いいいいいいい"
   ]);
 
+  const onClickAdd = () => {
+    if (todoText === "") return;
+    const newTodos = [...incompleteTodos, todoText];
+    setIncompleteTodos(newTodos);
+    setTodoText("");
+    // alert(todoText);
+  };
+
   const onChangeTodoText = (e) => {
     setTodoText(e.target.value);
   };
+
   const onClickDelete = (index) => {
     const newTodos = [...incompleteTodos];
     newTodos.splice(index, 1);
@@ -48,57 +59,26 @@ export const App = () => {
     //未完了のエリアから選択した項目を削除、それを完了エリアに追加。それぞれのStateを更新
   };
 
-  const onClickAdd = () => {
-    if (todoText === "") return;
-    const newTodos = [...incompleteTodos, todoText];
-    setIncompleteTodos(newTodos);
-    setTodoText("");
-    // alert(todoText);
-  };
   return (
     <>
       <InputTodo
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
+        disabled={incompleteTodos.length >= 5}
+        //trueの時にdisabled発動してるけど、この表記は慣れないな・・・
       />
-      <div className="incomplete-area">
-        <p className="title">未完のリスト</p>
-        <ul>
-          {incompleteTodos.map((todo, index) => {
-            return (
-              //ループ内で目印をつける。mapとかで繰り替え処理するときに必須？？
-              <li key={todo}>
-                <div className="list-row">
-                  <p>{todo}</p>
-                  <button onClick={() => onClickComplete(index)}>
-                    Complete
-                  </button>
-                  <button onClick={() => onClickDelete(index)}>Delete</button>
-                  {/* イベントハンドラに引数を入れたいときはアロー関数にしないと勝手に実行されるよーん */}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      {/* &&→左がtrueなら右を返す！！ */}
+      {incompleteTodos.length >= 5 && (
+        <p style={{ color: "red" }}>Todo溜まりすぎ〜。消化せよ！！</p>
+      )}
+      <IncompleteTodos
+        todos={incompleteTodos}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickDelete}
+      />
+      <CompleteTodos todos={completeTodos} onClickReturn={onClickReturn} />
 
-      <div className="complete-area">
-        <p className="title">完了リスト</p>
-        <ul>
-          {completeTodos.map((todo, index) => {
-            return (
-              <li key={todo}>
-                <div className="list-row">
-                  <p>{todo}</p>
-                  <button>comp!!</button>
-                  <button onClick={() => onClickReturn(index)}>return</button>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
       <div></div>
     </>
   );
