@@ -25,6 +25,28 @@ export const App = () => {
     setIncompleteTodos(newTodos);
     // console.log(index);
   };
+
+  const onClickComplete = (index) => {
+    // console.log(index);
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(index, 1);
+
+    const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
+    setIncompleteTodos(newIncompleteTodos);
+    setCompleteTodos(newCompleteTodos);
+    //未完了のエリアから選択した項目を削除、それを完了エリアに追加。それぞれのStateを更新
+  };
+  const onClickReturn = (index) => {
+    // console.log(index);
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
+
+    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+    setIncompleteTodos(newIncompleteTodos);
+    setCompleteTodos(newCompleteTodos);
+    //未完了のエリアから選択した項目を削除、それを完了エリアに追加。それぞれのStateを更新
+  };
+
   const onClickAdd = () => {
     if (todoText === "") return;
     const newTodos = [...incompleteTodos, todoText];
@@ -53,7 +75,9 @@ export const App = () => {
               <li key={todo}>
                 <div className="list-row">
                   <p>{todo}</p>
-                  <button>Complete</button>
+                  <button onClick={() => onClickComplete(index)}>
+                    Complete
+                  </button>
                   <button onClick={() => onClickDelete(index)}>Delete</button>
                   {/* イベントハンドラに引数を入れたいときはアロー関数にしないと勝手に実行されるよーん */}
                 </div>
@@ -66,12 +90,13 @@ export const App = () => {
       <div className="complete-area">
         <p className="title">完了リスト</p>
         <ul>
-          {completeTodos.map((todo) => {
+          {completeTodos.map((todo, index) => {
             return (
               <li key={todo}>
                 <div className="list-row">
                   <p>{todo}</p>
-                  <button>return</button>
+                  <button>comp!!</button>
+                  <button onClick={() => onClickReturn(index)}>return</button>
                 </div>
               </li>
             );
