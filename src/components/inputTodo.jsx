@@ -27,6 +27,9 @@ export const InputTodo = (props) => {
       <button disabled={disabled} onClick={onClick}>
         Add
       </button>
+      <button disabled={false} onClick={onClick}>
+        Add
+      </button>
     </div>
   );
 };

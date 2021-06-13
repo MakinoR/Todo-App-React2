@@ -67,6 +67,7 @@ export const App = () => {
         onClick={onClickAdd}
         disabled={incompleteTodos.length >= 5}
         //trueの時にdisabled発動してるけど、この表記は慣れないな・・・
+        //htmlのdisabledはtrueかfalseかを入力するものではないが、JSを組み込むとtrueかfalseかで判定できるようになる？
       />
       {/* &&→左がtrueなら右を返す！！ */}
       {incompleteTodos.length >= 5 && (
