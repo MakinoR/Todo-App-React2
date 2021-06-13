@@ -1,6 +1,7 @@
 // import React from "react";
 import React, { useState } from "react";
 import "./styles.css";
+import { InputTodo } from "./components/inputTodo";
 
 export const App = () => {
   // 分割代入でわかりやすく！！
@@ -8,12 +9,12 @@ export const App = () => {
   // useStateの第２引数は、第一引数のstateを更新していく関数を記述する
   //useStateの中身は第一引数の初期値になるよーん
   const [incompleteTodos, setIncompleteTodos] = useState([
-    "ああああああ",
-    "いいいいいいい"
+    // "ああああああ",
+    // "いいいいいいい"
   ]);
   const [completeTodos, setCompleteTodos] = useState([
-    "ああああああ",
-    "いいいいいいい"
+    // "ああああああ",
+    // "いいいいいいい"
   ]);
 
   const onChangeTodoText = (e) => {
@@ -56,16 +57,11 @@ export const App = () => {
   };
   return (
     <>
-      <div className="input-area">
-        {/* onchangeで値が変わるたびにstate が変わるように設定 */}
-        <input
-          placeholder="にゅうりょくしてね"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>Add</button>
-      </div>
-
+      <InputTodo
+        todoText={todoText}
+        onChange={onChangeTodoText}
+        onClick={onClickAdd}
+      />
       <div className="incomplete-area">
         <p className="title">未完のリスト</p>
         <ul>
